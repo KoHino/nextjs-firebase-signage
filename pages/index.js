@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react'
 import styles from '../styles/Sinage.module.css'
-import { getContentDataAdmin } from '../utilities/getContentDataAdmin';
+import { getContentDataAdmin, getOrderIdAdmin } from '../utilities/getContentDataAdmin';
 
 export async function getServerSideProps({query}) { 
-  const areaId = query.areaId ?? "0";
+  const areaId = query.areaId ?? 0;
   //areaIdからContents/(DocId) ⇒ orderId取得
-  const orderId = "dH0bsMmsi3QSJy9T90l1";
+  let orderId = await getOrderIdAdmin(areaId);
+ 
   const order_list = await getContentDataAdmin(orderId);
   const contents_list = order_list["set1"];
   return {
