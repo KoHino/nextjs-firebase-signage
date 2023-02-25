@@ -10,15 +10,11 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainListItems } from './listItems';
 
 
 function Copyright(props) {
@@ -26,7 +22,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit">
-        オープンアップラボ
+        ラボ
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -119,11 +115,7 @@ function DashboardContent({children, title='defaoult title'}) {
             >
               サイネージダッシュボード
             </Typography>
-            {/* <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton> */}
+            
             <Typography
               component="h2"
               variant="subtitle1"
@@ -168,9 +160,6 @@ function DashboardContent({children, title='defaoult title'}) {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            {/* <Grid container spacing={3}>
-              
-            </Grid> */}
             {children}
             <Copyright sx={{ pt: 4 }} />
           </Container>
