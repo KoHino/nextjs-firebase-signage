@@ -3,7 +3,7 @@ import styles from '../styles/Sinage.module.css'
 import { getContentDataAdmin, getOrderIdAdmin } from '../utilities/getContentDataAdmin';
 
 export async function getServerSideProps({query}) { 
-  const areaId = query.areaId ?? 0;
+  const areaId = query.areaId ?? "0";
   //areaIdからContents/(DocId) ⇒ orderId取得
   let orderId = await getOrderIdAdmin(areaId);
  
@@ -16,7 +16,7 @@ export async function getServerSideProps({query}) {
   };
 }
 
-export default function Sinage({ contents_list }) {
+export default function Signage({ contents_list }) {
   function viewSlide(contentElements, slidNo = -1) {
     if (contentElements === undefined || contentElements.length === 0) {
       return;
