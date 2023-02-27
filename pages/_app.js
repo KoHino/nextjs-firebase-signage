@@ -1,5 +1,3 @@
-// import 'tailwindcss/tailwind.css'
-import Head from "next/head";
 import { PropTypes } from "prop-types";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseInline from "@mui/material/CssBaseline";
