@@ -1,4 +1,4 @@
-import { createFirebaseApp } from "../firebase/clientApp";
+import { createFirebaseApp } from "../src/firebase/clientApp";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { arrayUnion } from "firebase/firestore";
 import { updateContentOrder } from "./setContentData";

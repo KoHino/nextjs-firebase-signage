@@ -1,4 +1,4 @@
-import admin from "../firebase/nodeApp";
+import admin from "../src/firebase/nodeApp";
 
 export const getContentDataAdmin = async (orderId) => {
     const target = `order/${orderId}`;

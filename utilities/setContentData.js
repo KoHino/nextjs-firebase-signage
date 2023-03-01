@@ -1,4 +1,4 @@
-import { createFirebaseApp } from "../firebase/clientApp";
+import { createFirebaseApp } from "../src/firebase/clientApp";
 import { collection, doc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
 
 export const setContentData = async (content) => {
