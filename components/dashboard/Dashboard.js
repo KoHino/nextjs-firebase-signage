@@ -169,7 +169,9 @@ function DashboardContent({children, title='defaoult title'}) {
 }
 
 export default function Dashboard({children, title}) {
-  return (<DashboardContent title='defalut title'>
+  return (
+    <DashboardContent title='defalut title'>
       {children}
-  </DashboardContent>);
+    </DashboardContent>
+  );
 }

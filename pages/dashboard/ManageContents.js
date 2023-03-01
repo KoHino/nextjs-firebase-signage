@@ -1,7 +1,6 @@
 import { Button, Grid, Paper, Typography, Box, FormControlLabel, Checkbox } from "@mui/material"
 import { useRouter } from "next/router";
 import { createRef, forwardRef, useEffect, useRef, useState } from "react";
-import Dashboard from "../../components/dashboard/Dashboard";
 import { getContentDataAdmin } from "../../utilities/getContentDataAdmin";
 import { setContentOrder } from "../../utilities/setContentData";
 
@@ -14,15 +13,16 @@ export async function getServerSideProps() {
   const hidden_list = contents_list["hidden"].filter(obj => Object.keys(obj).length);
   return {
     props: {
-      contents_list,
-      display_list,
-      hidden_list,
-      orderId
+      contents: contents_list,
+      display: display_list,
+      hidden: hidden_list,
+      oderId: orderId,
+      dashboard: true,
     }
   };
 }
 
-function ManageContents({contents_list,display_list, hidden_list, orderId}) {
+function ManageContents({contents: contents_list, display: display_list, hidden: hidden_list, orderId: orderId}) {
   // display / hidden : 表示/非表示コンテンツのArray
   const [display, setDisplay] = useState([...display_list]);
   const [hidden, setHidden] = useState([...hidden_list]);
@@ -196,12 +196,6 @@ function ManageContents({contents_list,display_list, hidden_list, orderId}) {
       </Box>
     </>
   );
-}
-
-ManageContents.getLayout = function getLayout(page) {
-  return (
-      <Dashboard>{page}</Dashboard>
-  )
 }
 
 export default ManageContents;

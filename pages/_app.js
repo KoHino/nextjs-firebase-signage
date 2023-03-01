@@ -6,7 +6,8 @@ import theme from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
+import Dashboard from "../components/dashboard/Dashboard";
+import AuthCheck from "../components/dashboard/AuthCheck";
 
 const clientSideEmotionCache = createEmotionCache();
 export default function MyApp(props) {
@@ -32,6 +33,8 @@ export default function MyApp(props) {
 
   const loadingComponent = (<h2>Loading...</h2>)
 
+  if (!pageProps.dashboard) return <Component {...pageProps} />
+
   return getLayout(
     <CacheProvider value={emotionCache}>
       {/* <Head>
@@ -39,8 +42,12 @@ export default function MyApp(props) {
       </Head> */}
       <ThemeProvider theme={theme}>
         <CssBaseInline />
-        { pageLoading && loadingComponent }
-        <Component {...pageProps} />
+        <Dashboard>
+          <AuthCheck>
+            { pageLoading && loadingComponent }
+            <Component {...pageProps} />
+          </AuthCheck>
+        </Dashboard>
       </ThemeProvider>
     </CacheProvider>
   );

@@ -22,13 +22,13 @@ export const MainListItems = () => {
 
   return (
     <React.Fragment>
-      <CustomlistItem onClick={() => router.push('/dashbord')} text="アップロード">
+      <CustomlistItem onClick={() => router.push('/dashboard')} text="アップロード">
         <UploadIcon />
       </CustomlistItem>
-      <CustomlistItem onClick={() => router.push('/dashbord/ManageContents')} text="コンテンツ変更">
+      <CustomlistItem onClick={() => router.push('/dashboard/ManageContents')} text="コンテンツ変更">
         <ChangeCircleIcon />
       </CustomlistItem>
-      <CustomlistItem onClick={() => router.push('/dashbord/ViewPosition')} text="表示画面調整">
+      <CustomlistItem onClick={() => router.push('/dashboard/ViewPosition')} text="表示画面調整">
         <DisplayIcon />
       </CustomlistItem>
     </React.Fragment>

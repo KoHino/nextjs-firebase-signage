@@ -1,4 +1,3 @@
-import Dashboard from "../../components/dashboard/Dashboard";
 import dynamic from "next/dynamic";
 
 const Upload = dynamic(() => import("../../components/dashboard/UplaodContents"), { ssr: false})
@@ -6,24 +5,21 @@ const Upload = dynamic(() => import("../../components/dashboard/UplaodContents")
 export async function getServerSideProps() { 
   //userId ⇒ areaId ⇒　Contents/(DocId) ⇒ orderId取得
   const orderId = "dH0bsMmsi3QSJy9T90l1";
+  
 
   return {
     props: {
-      orderId
+      orderId: orderId,
+      dashboard: true
     }
   };
 }
 
-function index({orderId}) {
-    return (
+function UploadContent({orderId: orderId}) {
+
+  return (
         <Upload orderId={orderId} />
-    );
+  );
 }
 
-index.getLayout = function getLayout(page) {
-    return (
-        <Dashboard>{page}</Dashboard>
-    )
-}
-
-export default index;
+export default UploadContent;
