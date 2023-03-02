@@ -16,6 +16,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { MainListItems } from './ListItems';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { OrderProvider, useOrderContext } from './OrderContext';
 
 
 function Copyright(props) {
@@ -78,11 +79,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 const mdTheme = createTheme();
-const OrderContext = React.createContext();
 
 function DashboardContent({ children, title = 'defaoult title' }) {
   const [open, setOpen] = React.useState(false);
-  // const [orderId, setOrderId] = React.useState("");
+  const { setOrderId } = useOrderContext();
   const [contentsObjArr, setContentsObjArr] = React.useState([]);
   const [area, setArea] = React.useState("");
   const toggleDrawer = () => {
@@ -92,7 +92,7 @@ function DashboardContent({ children, title = 'defaoult title' }) {
   const handleOnAreaChange = (event) => {
     setArea(event.target.value);
     const selectedIndex = contentsObjArr.map(obj => obj.areaName).indexOf(event.target.value);
-    sessionStorage.selectedOrder = contentsObjArr[selectedIndex].orderId;
+    setOrderId(contentsObjArr[selectedIndex].orderId);
   };
 
   React.useEffect(() => {
@@ -101,7 +101,7 @@ function DashboardContent({ children, title = 'defaoult title' }) {
     const tmpArr = JSON.parse(storage);
 
     setContentsObjArr(tmpArr);
-    sessionStorage.selectedOrder = tmpArr[0].orderId;
+    setOrderId(tmpArr[0].orderId);
     setArea(tmpArr[0].areaName);
   }, [])
 
@@ -198,8 +198,10 @@ function DashboardContent({ children, title = 'defaoult title' }) {
 
 export default function Dashboard({ children, title }) {
   return (
-    <DashboardContent title='defalut title'>
-      {children}
-    </DashboardContent>
+    <OrderProvider>
+      <DashboardContent title='defalut title'>
+        {children}
+      </DashboardContent>
+    </OrderProvider>
   );
 }

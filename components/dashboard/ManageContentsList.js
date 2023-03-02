@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { createRef, forwardRef, useEffect, useRef, useState } from "react";
 import { setContentOrder } from "../../utilities/setContentData";
 import { getContentDataClient } from "../../utilities/getContentDataClient";
+import { useOrderContext } from "./OrderContext";
 
 
 function ManageContentsView() {
@@ -14,21 +15,19 @@ function ManageContentsView() {
   // tempDisplay / tempHidden : display / hiddenに対しての一時的な変更を保持するMap
   const [tempDisplay, setTempDisplay] = useState(new Map());
   const [tempHidden, setTempHidden] = useState(new Map());
-  const [orderId, _] = useState(sessionStorage?.selectedOrder);
+  const { orderId } = useOrderContext();
 
   useEffect(() => {
     async function featchData() {
-      const seletedOrder = sessionStorage.getItem('selectedOrder');
-      console.log(seletedOrder)
-      if (seletedOrder == null) return;
-      const obj = await getContentDataClient(`/order/${seletedOrder}`);
+      if (orderId == null) return;
+      const obj = await getContentDataClient(`/order/${orderId}`);
       const display_filtered = obj["set1"].filter(obj => Object.keys(obj).length);
       const hidden_filtered = obj["hidden"].filter(obj => Object.keys(obj).length);
       setDisplay(display_filtered);
       setHidden(hidden_filtered);
     }
     featchData();
-  }, [])
+  }, [orderId])
 
   useEffect(() => {
     const displayMap = new Map();
