@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 
 const ContentsView = dynamic(() => import("../../components/dashboard/ManageContentsList"), { ssr: false });
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   return {
     props: {
       dashboard: true,
