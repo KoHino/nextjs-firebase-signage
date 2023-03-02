@@ -1,8 +1,8 @@
 import dynamic from "next/dynamic";
 
-const Upload = dynamic(() => import("../../components/dashboard/UplaodContents"), { ssr: false})
+const Upload = dynamic(() => import("../../components/dashboard/UplaodContents"), { ssr: false })
 
-export async function getStaticProps() { 
+export async function getStaticProps() {
 
   return {
     props: {
@@ -12,9 +12,9 @@ export async function getStaticProps() {
 }
 
 function UploadContent() {
-  
+
   return (
-        <Upload />
+    <Upload />
   );
 }
 
