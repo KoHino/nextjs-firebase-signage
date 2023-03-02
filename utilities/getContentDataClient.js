@@ -11,8 +11,7 @@ export const getContentsDataClient = async (target) => {
     return contentDocs.docs.map(doc => doc.data());
 }
 
-export const getContentDataClient = async (orderId) => {
-    const target = `order/${orderId}`;
+export const getContentDataClient = async (target) => {
     const app = createFirebaseApp();
     const db = getFirestore(app);
     const contentDoc = await getDoc(doc(db, target));
