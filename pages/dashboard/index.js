@@ -2,23 +2,19 @@ import dynamic from "next/dynamic";
 
 const Upload = dynamic(() => import("../../components/dashboard/UplaodContents"), { ssr: false})
 
-export async function getServerSideProps() { 
-  //userId ⇒ areaId ⇒　Contents/(DocId) ⇒ orderId取得
-  const orderId = "dH0bsMmsi3QSJy9T90l1";
-  
+export async function getStaticProps() { 
 
   return {
     props: {
-      orderId: orderId,
       dashboard: true
     }
   };
 }
 
-function UploadContent({orderId: orderId}) {
-
+function UploadContent() {
+  
   return (
-        <Upload orderId={orderId} />
+        <Upload />
   );
 }
 

@@ -15,6 +15,7 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { MainListItems } from './ListItems';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 
 function Copyright(props) {
@@ -77,12 +78,32 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 const mdTheme = createTheme();
+const OrderContext = React.createContext();
 
-function DashboardContent({children, title='defaoult title'}) {
+function DashboardContent({ children, title = 'defaoult title' }) {
   const [open, setOpen] = React.useState(false);
+  // const [orderId, setOrderId] = React.useState("");
+  const [contentsObjArr, setContentsObjArr] = React.useState([]);
+  const [area, setArea] = React.useState("");
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  const handleOnAreaChange = (event) => {
+    setArea(event.target.value);
+    const selectedIndex = contentsObjArr.map(obj => obj.areaName).indexOf(event.target.value);
+    sessionStorage.selectedOrder = contentsObjArr[selectedIndex].orderId;
+  };
+
+  React.useEffect(() => {
+    const storage = sessionStorage?.contents;
+    if (storage === undefined) return;
+    const tmpArr = JSON.parse(storage);
+
+    setContentsObjArr(tmpArr);
+    sessionStorage.selectedOrder = tmpArr[0].orderId;
+    setArea(tmpArr[0].areaName);
+  }, [])
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -115,15 +136,22 @@ function DashboardContent({children, title='defaoult title'}) {
             >
               サイネージダッシュボード
             </Typography>
-            
-            <Typography
-              component="h2"
-              variant="subtitle1"
-              color="inherit"
-              noWrap
-            >
-              関東エリア
-            </Typography>
+            <FormControl variant='standard' sx={{ minWidth: 120 }}>
+              <InputLabel id='area-label' sx={{ color: 'white' }}>エリア選択</InputLabel>
+              <Select
+                labelId='area-label'
+                id='area-select'
+                value={area}
+                onChange={handleOnAreaChange}
+                label="エリア選択"
+                sx={{ color: "white" }}
+              >
+                {contentsObjArr.map((obj, i) => (
+                  <MenuItem value={obj.areaName} key={i} >{obj.areaName}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -168,7 +196,7 @@ function DashboardContent({children, title='defaoult title'}) {
   );
 }
 
-export default function Dashboard({children, title}) {
+export default function Dashboard({ children, title }) {
   return (
     <DashboardContent title='defalut title'>
       {children}

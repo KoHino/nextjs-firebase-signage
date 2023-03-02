@@ -4,7 +4,7 @@ import CancelIcon from "@mui/icons-material/Cancel"
 import { postContent } from "../../utilities/upload";
 
 
-function UploadContents({ orderId }) {
+function UploadContents() {
     const [images, setImages] = useState([]);
     const [type, setType] = useState("image")
     const maxImageUpload = 4;
@@ -12,6 +12,7 @@ function UploadContents({ orderId }) {
 
     const handleOnUpload = async (e) => {
         e.preventDefault();
+        const orderId = sessionStorage?.selectedOrder
         images.forEach((image) => {
             postContent(orderId, image, type);
         })
