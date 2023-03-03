@@ -18,28 +18,27 @@ export async function getServerSideProps({ query }) {
 
 export default function Signage({ contents_list }) {
 
-  function viewSlide(contentElements, slidNo = -1) {
-    if (contentElements === undefined || contentElements.length === 0) {
-      return;
-    }
-
-    if (slidNo >= 0) {
-      contentElements[slidNo].style.opacity = 0;
-    }
-    slidNo++;
-    if (slidNo >= contentElements.length) {
-      slidNo = 0;
-    }
-    contentElements[slidNo].style.opacity = 1;
-    return setInterval(() => { viewSlide(contentElements, slidNo) }, contents_list[slidNo] ? contents_list[slidNo].viewTime : 2000);
-  }
-
   const divElement = useRef();
 
   useEffect(() => {
+    const viewSlide = (contentElements, slidNo = -1) => {
+      if (contentElements === undefined || contentElements.length === 0) {
+        return;
+      }
+
+      if (slidNo >= 0) {
+        contentElements[slidNo].style.opacity = 0;
+      }
+      slidNo++;
+      if (slidNo >= contentElements.length) {
+        slidNo = 0;
+      }
+      contentElements[slidNo].style.opacity = 1;
+      return setInterval(() => { viewSlide(contentElements, slidNo) }, contents_list[slidNo] ? contents_list[slidNo].viewTime : 2000);
+    }
     const id = viewSlide(divElement.current.children);
     return () => clearInterval(id);
-  });
+  }, [contents_list]);
 
   //ToDo: コンテンツ表示調節画面から変更できるようにする
   const prop_height = "100vh"
