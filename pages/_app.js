@@ -15,53 +15,64 @@ export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const router = useRouter();
   const [pageLoading, setPageLoading] = useState(false);
-  const getLayout = Component.getLayout || ((page) => (page));
+  const getLayout = Component.getLayout || ((page) => page);
   const [isLogin, setLogin] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (router.pathname == "/" || sessionStorage.getItem('contents') != undefined) return;
+    if (
+      router.pathname == "/" ||
+      sessionStorage.getItem("contents") != undefined
+    )
+      return;
     const handleOnLogin = async () => {
-      const docIds = ["i03QwRfyfmniocAe1OEQ", "gMh6kTTHwArqu7rqgACd"];
+      const docIds = ["test1", "test2"];
       let contentsInfo = [];
-      await Promise.all(docIds.map(async (id) => {
-        const info = await getContentDataClient(`contents/${id}`);
-        contentsInfo.push(info);
-      }))
-      sessionStorage.setItem('contents', JSON.stringify(contentsInfo, undefined, 1));
-      console.log("Login: ", sessionStorage.getItem('contents'));
+      await Promise.all(
+        docIds.map(async (id) => {
+          const info = await getContentDataClient(`contents/${id}`);
+          contentsInfo.push(info);
+        })
+      );
+      sessionStorage.setItem(
+        "contents",
+        JSON.stringify(contentsInfo, undefined, 1)
+      );
+      console.log("Login: ", sessionStorage.getItem("contents"));
       setLogin(true);
       // router.push('/dashboard');
-    }
+    };
     handleOnLogin();
-  }, [router.pathname])
+  }, [router.pathname]);
 
   useEffect(() => {
     const handleStart = (url) => url !== router.asPath && setPageLoading(true);
     const handleComplete = () => setPageLoading(false);
 
-    router.events.on('routeChangeStart', handleStart);
-    router.events.on('routeChangeComplete', handleComplete);
-    router.events.on('routeChangeError', handleComplete);
+    router.events.on("routeChangeStart", handleStart);
+    router.events.on("routeChangeComplete", handleComplete);
+    router.events.on("routeChangeError", handleComplete);
+
+    if (sessionStorage.getItem("contents")) setLogin(true);
 
     return () => {
-      router.events.off('routeChangeStart', handleStart);
-      router.events.off('routeChangeComplete', handleComplete);
-      router.events.off('routeChangeError', handleComplete);
-    }
-  }, [router.events, router.asPath])
+      router.events.off("routeChangeStart", handleStart);
+      router.events.off("routeChangeComplete", handleComplete);
+      router.events.off("routeChangeError", handleComplete);
+    };
+  }, [router.events, router.asPath]);
 
   useEffect(() => {
     if (router.isReady) {
       setLoading(true);
     }
-  }, [router.isReady])
+  }, [router.isReady]);
 
-  const loadingComponent = (<h2>Loading...</h2>)
-  if (!loading) return <h3>router準備中</h3>
-  if (router.pathname != "/" && !isLogin) return <h3>ログイン中です</h3>
+  const loadingComponent = <h2>Loading...</h2>;
+  if (!loading) return <h3>router準備中</h3>;
+  if (router.pathname != "/" && !isLogin) return <h3>ログイン中です</h3>;
 
-  if (!pageProps.dashboard) return <Component {...pageProps} />
+  if (!pageProps.dashboard) return <Component {...pageProps} />;
 
   return getLayout(
     <CacheProvider value={emotionCache}>
